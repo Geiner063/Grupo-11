@@ -1,0 +1,97 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   21:23:19 08/13/2015
+// Design Name:   Principal
+// Module Name:   C:/Users/GEINER/Documents/Xilinx/Proyecto001_Digitales/Prueba003.v
+// Project Name:  Proyecto001_Digitales
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Test Fixture created by ISE for module: Principal
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module Prueba003;
+
+	// Inputs
+	reg Clk;
+	reg Humo;
+	reg [4:0] Gas;
+	reg Master;
+	reg Inh;
+
+	// Outputs
+	wire LEDH;
+	wire [2:0] LEDG;
+	wire [1:0] Boci;
+	wire [11:0] BCD;
+
+	// Instantiate the Unit Under Test (UUT)
+	Principal uut (
+		.Clk(Clk), 
+		.Humo(Humo), 
+		.Gas(Gas), 
+		.Master(Master), 
+		.Inh(Inh), 
+		.LEDH(LEDH), 
+		.LEDG(LEDG), 
+		.Boci(Boci), 
+		.BCD(BCD)
+	);
+
+	initial begin
+		// Initialize Inputs
+		Clk = 0;
+		Humo = 0;
+		Gas = 0;
+		Master = 0;
+		Inh = 0;
+		#100; 
+		Humo = 1;
+		#10000;
+      Humo = 0; 
+		#2000000;  
+		Master = 1;  
+		#10000;
+		Master = 0;
+		#10000;
+		Gas = 5'd31;
+		#10000;
+		Inh = 1;
+		#10000;
+		Inh = 0;
+		#10000000;
+      Gas = 5'd27;
+		#100000;
+		Gas = 5'd0;
+		#100000;
+		Master = 1;  
+		#10000;
+		Master = 0;
+//		// Add stimulus here
+//		Humo=1;
+//		#100;
+//		Humo=0;
+//		#1000;
+//		Master=1;
+//		#100;
+//		Master=0;
+//		
+
+	end
+      initial forever
+		#10 Clk = !Clk;
+endmodule
+
+
