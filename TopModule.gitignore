@@ -1,0 +1,58 @@
+`timescale 1ns / 1ps
+
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 	Instituto Tecnológico de Costa Rica
+//
+// Engineer: 	Geiner Granados Brenes
+//					Isaac Valverde Fernández
+// 
+// Create Date:    	14:29:28 13/08/2015 
+// Design Name: 		SCI
+// Module Name:    	FSM 
+// Project Name: 		I Proyecto Digitales
+// Target Devices: 	Spartan 6
+// Tool versions: 
+// Description: 
+//
+// Dependencies: 
+//
+// Revision: 
+// Revision 0.01 - File Created
+// Additional Comments: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+module Principal(
+	input wire Clk,
+	input wire Humo,
+	input wire [4:0] Gas,
+	input wire Master,
+	input wire Inh,
+	output wire LEDH,
+	output wire [2:0] LEDG,
+	output wire [1:0] Boci,
+	output wire [11:0] BCD
+    );
+	 
+	wire [2:0]state;			
+	 
+BCD_7seg instance_1 (
+    .Clock(Clk),				// Reloj de 100Mhz
+    .State(state),  			// Número que indica el estado de la máquina
+    .Gas(Gas), 				// Entrada de de 5 bits
+    .BCDCode(BCD)				// Salida de 12 bits (8-LEDs. 4-Selectores)
+    );
+	 	 
+FSM instance_2 (
+    .Clock(Clk), 				// Reloj de 100Mhz
+    .SmokeSignal(Humo), 	// Entrada de humo
+    .GasBus(Gas), 			// Entrada de de 5 bits
+    .Inhibidor(Inh), 		// Impedir activación de la alarma principal
+    .MasterReset(Master), 	// Volver al estado inicial
+    .LEdH(LEDH), 				// Salida de 1 bit
+	 .LEdG(LEDG), 				// Salida de 3 bits
+    .Bocina(Boci),			// Salida de 2 bits
+	 .State_salida(state)	// Número que indica el estado de la máquina
+    );
+
+endmodule
